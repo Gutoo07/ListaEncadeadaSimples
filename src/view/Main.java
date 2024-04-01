@@ -3,8 +3,9 @@ package view;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Lista l = new Lista();
+			boolean vazia = l.listaVazia();
+			
 	}
 
 }
