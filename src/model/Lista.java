@@ -61,4 +61,76 @@ public class Lista<T> {
 			this.insert( this.get( --index), elemento ); 
 		}
 	}
+	public void insert(No<T> item, T elemento) throws IllegalArgumentException {
+		No<T> buffer_novo = new No<>(elemento);
+		No<T> buffer_proximo = item.getProximo();
+		item.setProximo(buffer_novo);
+		buffer_novo.setProximo(buffer_proximo);
+	}
+	public No<T> last() throws IllegalArgumentException {
+		if (this.inicio == null) {
+			throw new IllegalArgumentException("Nao existe item na lista.");
+		}
+		No<T> buffer = this.inicio;
+		while (buffer.getProximo() != null) {
+			buffer = buffer.getProximo();
+		}
+		return buffer;		
+	}
+	public void remove(int index) {
+		if (index == 0) {
+			this.inicio.setValor(null);
+			if (this.inicio.getProximo() == null) {
+				this.inicio = null;
+			} else {
+				No<T> buffer = this.inicio.getProximo();
+				this.inicio.setProximo(null);
+				this.inicio = buffer;
+			}
+			return;
+		}
+		No<T> buffer_anterior = this.get(index - 1);
+		No<T> item = buffer_anterior.getProximo();
+		No<T> buffer_proximo = item.getProximo();
+		buffer_anterior.setProximo(buffer_proximo);
+		item.setProximo(null);
+		item.setValor(null);
+	}
+	public int total() {
+		if (this.inicio == null) {
+			return 0;
+		}
+		No<T> buffer = this.inicio;
+		int total_elementos = 0;
+		
+		do {
+			total_elementos++;
+			buffer = buffer.getProximo();
+		} while (buffer != null);
+		return total_elementos;
+	}
+	@Override
+	public String toString() {
+		if (this.inicio == null) {
+			return "[]";
+		}
+		StringBuilder builder = new StringBuilder("[");
+		No<T> buffer = this.inicio;
+		builder.append(buffer.getValor());
+		while ( buffer.getProximo() != null) {
+			builder.append(",");
+			buffer = buffer.getProximo();
+			builder.append(buffer.getValor());
+		}
+		builder.append("]");
+		return builder.toString();
+	}
 }
+
+
+
+
+
+
+
+
